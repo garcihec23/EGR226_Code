@@ -7,7 +7,7 @@
  * Professor Ekin
  * Date: February 7, 2020
  *
- * Description: This program will initialize with the RGB LED off
+ * Description: This program (Part 2) will initialize with the RGB LED off
  * and will cycle through Red -> Green -> Blue -> Red, etc. as the
  * switch button 1 is held pressed.
  */
