@@ -21,9 +21,9 @@ void main(void)
 {
     WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // stop watch dog timer
 
+    init_ports();               // Calls the Port Initialization Function
 
     while(1) {
-        init_ports();           // Calls the Port Initialization Function
         state_machine();        // Calls the State Machine Function
         }
     }
