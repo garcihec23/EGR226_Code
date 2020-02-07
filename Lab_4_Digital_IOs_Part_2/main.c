@@ -28,7 +28,10 @@ void main(void)
         }
     }
 
-
+/*
+ * This function avoids reading the pushbutton switch during a switch bounce
+ * interval
+ */
 int SwitchBounce() {
 
     uint8_t flag = 0;       // Variable is changed when switch button is pressed
@@ -143,5 +146,3 @@ void state_machine() {
         }
     }
 }
-
-
