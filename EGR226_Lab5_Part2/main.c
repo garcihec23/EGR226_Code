@@ -16,6 +16,7 @@
     int SwitchBounce();         // Switch Bounce Function
     void init_ports();          // Port Initialization Function
     void state_machine();       // State Machine Function
+    void delay1s();             // Delay of 1 second Function
 
 void main(void)
 {
@@ -43,7 +44,7 @@ int SwitchBounce() {
 
     while (1) {
         if ((P2->IN & BIT4) == 0) {
-            __delay_cycles(3000000);      // When cycles equals 3,000,000,the delay will be 1 second
+            delay1s();      // When cycles equals 3,000,000,the delay will be 1 second
 
             if ((P2->IN & BIT4) == 0) {
                 flag = 1;       // flag is set to 1 meaning button is pressed
@@ -145,4 +146,22 @@ void state_machine() {
             break;
         }
     }
+}
+
+
+/*
+ * This functions initializes the SysTick Timer
+ */
+void delay1s() {
+    SysTick -> LOAD = 3000000 - 1;        // 1s Delay is 1s / (1 / 3MHz))
+    SysTick -> VAL = 0;         // Clear Current Value Register
+    SysTick -> CTRL = 5;        // Enable the SysTick Timer
+
+    while ((SysTick -> CTRL & BIT(16)) == 0) {
+        /*
+         * Wait until the COUNTFLAG is set
+         */
+    }
+
+    SysTick -> CTRL = 0;        // Stop the Timer (Enable = 0)
 }
