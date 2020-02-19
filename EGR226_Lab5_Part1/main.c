@@ -158,10 +158,10 @@ void state_machine() {
 
 /*
  * This function initializes the SysTick Timer
- * and creats a 5ms delay
+ * and creates a 5ms delay
  */
 void delay5ms() {
-    SysTick -> LOAD = 15000;        // 5ms Delay is 5ms / (1 / 3MHz))
+    SysTick -> LOAD = 15000 - 1;        // 5ms Delay is 5ms / (1 / 3MHz))
     SysTick -> VAL = 0;         // Clear Current Value Register
     SysTick -> CTRL = 5;        // Enable the SysTick Timer
 
