@@ -4,3 +4,8 @@ void main(void)
 {
 	WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;		// stop watchdog timer
 }
+
+uint8_t Read_Keypad (void) {
+
+}
+
