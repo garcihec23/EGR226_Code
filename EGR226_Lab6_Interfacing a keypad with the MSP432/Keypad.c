@@ -77,18 +77,17 @@ uint16_t Button_Pressed () {
 /*
  * Local variable that is assigned the 16-bit number that represents the the button that was pressed.
  */
-    uint16_t button =0x0000;        // Initialized to 0's
+    uint16_t button = 0x0000;        // Initialized to 0's
 
-/****/
-    C0_ON;      // Sets Column 0 HIGH
+
+    C0_ON;      // Sets Column 3 HIGH
     button |= (Pressed_Row() & 0x000F) << 0;        // Pressed_Row () Function returns an 8-bits, and we only care
                                                     // about the 4 least significant bits, we mask it with 0x000F.
                                                     // Since this is the first column, we will not shift it to the left
                                                     // Ends up being the MSBs of the variable 'button'
     Systick_Delay(10);          // Generates a 10ms delay
-    C0_OFF;     // Sets Column 0 LOW
+    C0_OFF;     // Sets Column 3 LOW
 
- /****/
     C1_ON;      // Sets Column 1 HIGH
     button |= (Pressed_Row() & 0x000F) << 4;        // Pressed_Row () Function returns an 8-bits, and we only care
                                                     // about the 4 least significant bits, we mask it with 0x000F.
@@ -96,16 +95,17 @@ uint16_t Button_Pressed () {
     Systick_Delay(10);          // Generates a 10ms delay
     C1_OFF;     // Sets Column 1 LOW
 
-/****/
-    C2_ON;      // Sets Column 2 HIGH
+
+    C2_ON;      // Sets Column 0 HIGH
     button |= (Pressed_Row() & 0x000F) << 8;        // Pressed_Row () Function returns an 8-bits, and we only care
                                                     // about the 4 least significant bits, we mask it with 0x000F.
                                                     // Since this is the second column, we will shift it to the left by 8-bits
                                                     // Ends up being the LSBs of the variable 'button'
     Systick_Delay(10);          // Generates a 10ms delay
-    C2_OFF;     // Sets Column 2 LOW
+    C2_OFF;     // Sets Column 0 LOW
 
-/****/
+
+
     return button;      // returns a 16-bit number that can be translated to the correct "button" pressed
 }
 
@@ -115,8 +115,8 @@ uint16_t Button_Pressed () {
  */
 void Systick_Delay(uint16_t time) {
     SysTick -> LOAD = (3000 * time) - 1;        //  Delay is (3000 * specified time in milliseconds) / (1 / 3MHz))
-    SysTick -> VAL = 0;         // Clear Current Value Register
-    SysTick -> CTRL = 5;        // Enable the SysTick Timer
+    SysTick -> VAL = 0;                         // Clear Current Value Register
+    SysTick -> CTRL = 5;                        // Enable the SysTick Timer
 
     while ((SysTick -> CTRL & BIT(16)) == 0) {
         /*
