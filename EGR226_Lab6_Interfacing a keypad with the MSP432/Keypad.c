@@ -55,12 +55,15 @@ uint8_t Pressed_Row () {
      * We only care about the 4 least significant bits as there are only 4 rows
      */
     uint8_t row = 0x00;         // initialized to 0's
-    delay5ms();                 //
+    Systick_Delay(10);          // Generates a 10ms delay
 
-    row |= (ROW0_PORT -> IN & ROW0_PIN) ? 1 << 0 : 0;       // This ternary condition assigns a 1 to the least significant bit if Row 0 is pressed else it assigns it a 0 (0000 000X)
-    row |= (ROW1_PORT -> IN & ROW1_PIN) ? 1 << 1 : 0;       // This ternary condition assigns a 1 to the first bit if Row 1 is pressed else it assigns it a 0 (0000 00X0)
-    row |= (ROW2_PORT -> IN & ROW2_PIN) ? 1 << 2 : 0;       // This ternary condition assigns a 1 to the second bit if Row 2 is pressed else it assigns it a 0 (0000 0X00)
-    row |= (ROW3_PORT -> IN & ROW3_PIN) ? 1 << 3 : 0;       // This ternary condition assigns a 1 to the third bit if Row 3 Pin 0 is pressed else it assigns it a 0 (0000 X000)
+    row |= (ROW0_PORT->IN & ROW0_PIN) ? 1 << 0 : 0;       // This ternary condition assigns a 1 to the least significant bit if Row 0 is pressed else it assigns it a 0 (0000 000X)
+    Systick_Delay(10);          // Generates a 10ms delay
+    row |= (ROW1_PORT->IN & ROW1_PIN) ? 1 << 1 : 0;       // This ternary condition assigns a 1 to the first bit if Row 1 is pressed else it assigns it a 0 (0000 00X0)
+    Systick_Delay(10);          // Generates a 10ms delay
+    row |= (ROW2_PORT->IN & ROW2_PIN) ? 1 << 2 : 0;       // This ternary condition assigns a 1 to the second bit if Row 2 is pressed else it assigns it a 0 (0000 0X00)
+    Systick_Delay(10);          // Generates a 10ms delay
+    row |= (ROW3_PORT->IN & ROW3_PIN) ? 1 << 3 : 0;       // This ternary condition assigns a 1 to the third bit if Row 3 is pressed else it assigns it a 0 (0000 X000)
 
     return row;
 }
@@ -82,6 +85,7 @@ uint16_t Button_Pressed () {
                                                     // about the 4 least significant bits, we mask it with 0x000F.
                                                     // Since this is the first column, we will not shift it to the left
                                                     // Ends up being the MSBs of the variable 'button'
+    Systick_Delay(10);          // Generates a 10ms delay
     C0_OFF;     // Sets Column 0 LOW
 
  /****/
@@ -89,6 +93,7 @@ uint16_t Button_Pressed () {
     button |= (Pressed_Row() & 0x000F) << 4;        // Pressed_Row () Function returns an 8-bits, and we only care
                                                     // about the 4 least significant bits, we mask it with 0x000F.
                                                     // Since this is the second column, we will shift it to the left by 4-bits
+    Systick_Delay(10);          // Generates a 10ms delay
     C1_OFF;     // Sets Column 1 LOW
 
 /****/
@@ -97,6 +102,7 @@ uint16_t Button_Pressed () {
                                                     // about the 4 least significant bits, we mask it with 0x000F.
                                                     // Since this is the second column, we will shift it to the left by 8-bits
                                                     // Ends up being the LSBs of the variable 'button'
+    Systick_Delay(10);          // Generates a 10ms delay
     C2_OFF;     // Sets Column 2 LOW
 
 /****/
@@ -105,10 +111,10 @@ uint16_t Button_Pressed () {
 
 /*
  * This function initializes the SysTick Timer
- * and creates a 5ms delay
+ * and creates a delay depending on the argument in ms
  */
-void delay5ms() {
-    SysTick -> LOAD = 150000 - 1;        // 5ms Delay is 5ms / (1 / 3MHz))
+void Systick_Delay(uint16_t time) {
+    SysTick -> LOAD = (3000 * time) - 1;        //  Delay is (3000 * specified time in milliseconds) / (1 / 3MHz))
     SysTick -> VAL = 0;         // Clear Current Value Register
     SysTick -> CTRL = 5;        // Enable the SysTick Timer
 
@@ -119,4 +125,5 @@ void delay5ms() {
     }
 
     SysTick -> CTRL = 0;        // Stop the Timer (Enable = 0)
+
 }
