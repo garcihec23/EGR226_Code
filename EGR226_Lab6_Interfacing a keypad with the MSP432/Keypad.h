@@ -1,6 +1,7 @@
 #ifndef __KEYPAD_H__    // ifndef stands for if not defined
 #define __KEYPAD_H__
 
+#include <stdint.h>
 
 /*
  * If we want to implement our keypad in a different project
@@ -43,19 +44,19 @@
  */
 
 // Column 0 is set HIGH
-    #define  C0_ON COLUMN0_PORT -> DIR |= COLUMN0_PIN; COLUMN0_PORT->OUT |= COLUMN0_PIN
+    #define  C0_ON COLUMN0_PORT->DIR |= COLUMN0_PIN; COLUMN0_PORT->OUT |= COLUMN0_PIN
 // Column 0 is set LOW
-    #define  C0_OFF COLUMN0_PORT -> DIR &= ~COLUMN0_PIN; COLUMN0_PORT->OUT &= ~COLUMN0_PIN
+    #define  C0_OFF COLUMN0_PORT->DIR &= ~COLUMN0_PIN; COLUMN0_PORT->OUT &= ~COLUMN0_PIN
 
 // Column 1 is set HIGH
-    #define  C1_ON COLUMN1_PORT -> DIR |= COLUMN1_PIN; COLUMN0_PORT->OUT |= COLUMN0_PIN
+    #define  C1_ON COLUMN1_PORT->DIR |= COLUMN1_PIN; COLUMN0_PORT->OUT |= COLUMN0_PIN
 // Column 1 is set LOW
-    #define  C1_OFF COLUMN1_PORT -> DIR &= ~COLUMN1_PIN; COLUMN0_PORT->OUT &= ~COLUMN0_PIN
+    #define  C1_OFF COLUMN1_PORT->DIR &= ~COLUMN1_PIN; COLUMN0_PORT->OUT &= ~COLUMN0_PIN
 
 // Column 2 is set HIGH
-    #define  C2_ON COLUMN2_PORT -> DIR |= COLUMN2_PIN; COLUMN2_PORT->OUT |= COLUMN2_PIN
+    #define  C2_ON COLUMN2_PORT->DIR |= COLUMN2_PIN; COLUMN2_PORT->OUT |= COLUMN2_PIN
 // Column 2 is set LOW
-    #define  C2_OFF COLUMN2_PORT -> DIR &= ~COLUMN2_PIN; COLUMN2_PORT->OUT &= ~COLUMN2_PIN
+    #define  C2_OFF COLUMN2_PORT->DIR &= ~COLUMN2_PIN; COLUMN2_PORT->OUT &= ~COLUMN2_PIN
 
 
 /*
@@ -64,6 +65,7 @@
 
 void Init_Keypad();             // Initializes the ports and pins associated to the keypad
 uint8_t Pressed_Row ();         // The Pressed_Row function identifies which row was pressed
-uint16_t Pressed_Column ();     // The Pressed_Column function identifies which button was pressed
+uint16_t Button_Pressed ();     // The Button_Pressed function identifies which button was pressed
+//void Print_Button ();           // The Print_Button function prints on the CCS console the button pressed
 
 #endif

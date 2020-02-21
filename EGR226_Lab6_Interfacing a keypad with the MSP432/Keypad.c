@@ -1,4 +1,7 @@
-#include "Keypad.h"
+#include "msp.h"
+#include "keypad.h"
+#include <stdint.h>
+#include <stdio.h>
 
 /*
  * The Init_Keypad function initializes the pins that the
@@ -12,33 +15,33 @@ void Init_Keypad() {
      * just specific ones
      */
 
-    R0_PORT -> DIR &= ~R0_PIN;       // Sets the pin to be an input
-    R0_PORT -> REN |= R0_PIN;        // Enables the internal resistor
-    R0_PORT -> OUT &= ~R0_PIN;       // Sets the internal resistance to be a pull-down resistor
+    ROW0_PORT->DIR &= ~ROW0_PIN;       // Sets the pin to be an input
+    ROW0_PORT->REN |= ROW0_PIN;        // Enables the internal resistor
+    ROW0_PORT->OUT &= ~ROW0_PIN;       // Sets the internal resistance to be a pull-down resistor
 
-    R1_PORT -> DIR &= ~R1_PIN;       // Sets the pin to be an input
-    R1_PORT -> REN |= R1_PIN;        // Enables the internal resistor
-    R1_PORT -> OUT &= ~R1_PIN;       // Sets the internal resistance to be a pull-down resistor
+    ROW1_PORT->DIR &= ~ROW1_PIN;       // Sets the pin to be an input
+    ROW1_PORT->REN |= ROW1_PIN;        // Enables the internal resistor
+    ROW1_PORT->OUT &= ~ROW1_PIN;       // Sets the internal resistance to be a pull-down resistor
 
-    R2_PORT -> DIR &= ~R2_PIN;       // Sets the pin to be an input
-    R2_PORT -> REN |= R2_PIN;        // Enables the internal resistor
-    R2_PORT -> OUT &= ~R2_PIN;       // Sets the internal resistance to be a pull-down resistor
+    ROW2_PORT->DIR &= ~ROW2_PIN;       // Sets the pin to be an input
+    ROW2_PORT->REN |= ROW2_PIN;        // Enables the internal resistor
+    ROW2_PORT->OUT &= ~ROW2_PIN;       // Sets the internal resistance to be a pull-down resistor
 
-    R3_PORT -> DIR &= ~R3_PIN;       // Sets the pin to be an input
-    R3_PORT -> REN |= R3_PIN;        // Enables the internal resistor
-    R3_PORT -> OUT &= ~R3_PIN;       // Sets the internal resistance to be a pull-down resistor
+    ROW3_PORT->DIR &= ~ROW3_PIN;       // Sets the pin to be an input
+    ROW3_PORT->REN |= ROW3_PIN;        // Enables the internal resistor
+    ROW3_PORT->OUT &= ~ROW3_PIN;       // Sets the internal resistance to be a pull-down resistor
 
-    C0_PORT -> DIR &= ~C0_PIN;       // Sets the pin to be an input
-    C0_PORT -> REN |= C0_PIN;        // Enables the internal resistor
-    C0_PORT -> OUT &= ~C0_PIN;       // Sets the internal resistance to be a pull-down resistor
+    COLUMN0_PORT->DIR &= ~COLUMN0_PIN;       // Sets the pin to be an input
+    COLUMN0_PORT->REN |= COLUMN0_PIN;        // Enables the internal resistor
+    COLUMN0_PORT->OUT &= ~COLUMN0_PIN;       // Sets the internal resistance to be a pull-down resistor
 
-    C1_PORT -> DIR &= ~C1_PIN;       // Sets the pin to be an input
-    C1_PORT -> REN |= C1_PIN;        // Enables the internal resistor
-    C1_PORT -> OUT &= ~C1_PIN;       // Sets the internal resistance to be a pull-down resistor
+    COLUMN1_PORT->DIR &= ~COLUMN1_PIN;       // Sets the pin to be an input
+    COLUMN1_PORT->REN |= COLUMN1_PIN;        // Enables the internal resistor
+    COLUMN1_PORT->OUT &= ~COLUMN1_PIN;       // Sets the internal resistance to be a pull-down resistor
 
-    C2_PORT -> DIR &= ~C2_PIN;       // Sets the pin to be an input
-    C2_PORT -> REN |= C2_PIN;        // Enables the internal resistor
-    C2_PORT -> OUT &= ~C2_PIN;       // Sets the internal resistance to be a pull-down resistor
+    COLUMN2_PORT->DIR &= ~COLUMN2_PIN;       // Sets the pin to be an input
+    COLUMN2_PORT->REN |= COLUMN2_PIN;        // Enables the internal resistor
+    COLUMN2_PORT->OUT &= ~COLUMN2_PIN;       // Sets the internal resistance to be a pull-down resistor
 }
 
 /*
@@ -53,10 +56,10 @@ uint8_t Pressed_Row () {
      */
     uint8_t row = 0x00;         // initialized to 0's
 
-    row |= (R0_PORT -> IN & R0_PIN) ? 1 << 0 : 0;       // This ternary condition assigns a 1 to the least significant bit if Row 0 is pressed else it assigns it a 0 (0000 000X)
-    row |= (R1_PORT -> IN & R1_PIN) ? 1 << 1 : 0;       // This ternary condition assigns a 1 to the first bit if Row 1 is pressed else it assigns it a 0 (0000 00X0)
-    row |= (R2_PORT -> IN & R2_PIN) ? 1 << 2 : 0;       // This ternary condition assigns a 1 to the second bit if Row is pressed else it assigns it a 0 (0000 0X00)
-    row |= (R3_PORT -> IN & R3_PIN) ? 1 << 3 : 0;       // This ternary condition assigns a 1 to the third bit if Row 0 Pin 0 is pressed else it assigns it a 0 (0000 X000)
+    row |= (ROW0_PORT -> IN & ROW0_PIN) ? 1 << 0 : 0;       // This ternary condition assigns a 1 to the least significant bit if Row 0 is pressed else it assigns it a 0 (0000 000X)
+    row |= (ROW1_PORT -> IN & ROW1_PIN) ? 1 << 1 : 0;       // This ternary condition assigns a 1 to the first bit if Row 1 is pressed else it assigns it a 0 (0000 00X0)
+    row |= (ROW2_PORT -> IN & ROW2_PIN) ? 1 << 2 : 0;       // This ternary condition assigns a 1 to the second bit if Row is pressed else it assigns it a 0 (0000 0X00)
+    row |= (ROW3_PORT -> IN & ROW3_PIN) ? 1 << 3 : 0;       // This ternary condition assigns a 1 to the third bit if Row 0 Pin 0 is pressed else it assigns it a 0 (0000 X000)
 
     return row;
 }
@@ -66,15 +69,42 @@ uint8_t Pressed_Row () {
  * then passes the unsigned 16-bit number to the next function
  */
 
-uint16_t Pressed_Column () {
-    /*
-     * Local variable that is assigned the 16-bit number that represents the the button that was pressed.
-     */
+uint16_t Button_Pressed () {
+/*
+ * Local variable that is assigned the 16-bit number that represents the the button that was pressed.
+ */
     uint16_t button =0x0000;        // Initialized to 0's
 
-    button = ()
+/****/
+    C0_ON;      // Sets Column 0 HIGH
+    button |= (Pressed_Row() & 0x000F) << 0;        // Pressed_Row () Function returns an 8-bits, and we only care
+                                                    // about the 4 least significant bits, we mask it with 0x000F.
+                                                    // Since this is the first column, we will not shift it to the left
+                                                    // Ends up being the MSBs of the variable 'button'
+    C0_OFF;     // Sets Column 0 LOW
 
+ /****/
+    C1_ON;      // Sets Column 1 HIGH
+    button |= (Pressed_Row() & 0x000F) << 4;        // Pressed_Row () Function returns an 8-bits, and we only care
+                                                    // about the 4 least significant bits, we mask it with 0x000F.
+                                                    // Since this is the second column, we will shift it to the left by 4-bits
+    C1_OFF;     // Sets Column 1 LOW
 
+/****/
+    C2_ON;      // Sets Column 2 HIGH
+    button |= (Pressed_Row() & 0x000F) << 8;        // Pressed_Row () Function returns an 8-bits, and we only care
+                                                    // about the 4 least significant bits, we mask it with 0x000F.
+                                                    // Since this is the second column, we will shift it to the left by 8-bits
+                                                    // Ends up being the LSBs of the variable 'button'
+    C2_OFF;     // Sets Column 2 LOW
+
+/****/
+    return button;      // returns a 16-bit number that can be translated to the correct "button" pressed
 }
+
+
+
+
+
 
 
