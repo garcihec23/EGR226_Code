@@ -55,6 +55,7 @@ uint8_t Pressed_Row () {
      * We only care about the 4 least significant bits as there are only 4 rows
      */
     uint8_t row = 0x00;         // initialized to 0's
+    delay5ms();                 //
 
     row |= (ROW0_PORT -> IN & ROW0_PIN) ? 1 << 0 : 0;       // This ternary condition assigns a 1 to the least significant bit if Row 0 is pressed else it assigns it a 0 (0000 000X)
     row |= (ROW1_PORT -> IN & ROW1_PIN) ? 1 << 1 : 0;       // This ternary condition assigns a 1 to the first bit if Row 1 is pressed else it assigns it a 0 (0000 00X0)
@@ -102,9 +103,20 @@ uint16_t Button_Pressed () {
     return button;      // returns a 16-bit number that can be translated to the correct "button" pressed
 }
 
+/*
+ * This function initializes the SysTick Timer
+ * and creates a 5ms delay
+ */
+void delay5ms() {
+    SysTick -> LOAD = 150000 - 1;        // 5ms Delay is 5ms / (1 / 3MHz))
+    SysTick -> VAL = 0;         // Clear Current Value Register
+    SysTick -> CTRL = 5;        // Enable the SysTick Timer
 
+    while ((SysTick -> CTRL & BIT(16)) == 0) {
+        /*
+         * Wait until the COUNTFLAG is set
+         */
+    }
 
-
-
-
-
+    SysTick -> CTRL = 0;        // Stop the Timer (Enable = 0)
+}

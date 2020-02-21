@@ -1,4 +1,4 @@
-#ifndef __KEYPAD_H__    // ifndef stands for if not defined
+//#ifndef __KEYPAD_H__    // ifndef stands for if not defined
 #define __KEYPAD_H__
 
 #include <stdint.h>
@@ -66,6 +66,5 @@
 void Init_Keypad();             // Initializes the ports and pins associated to the keypad
 uint8_t Pressed_Row ();         // The Pressed_Row function identifies which row was pressed
 uint16_t Button_Pressed ();     // The Button_Pressed function identifies which button was pressed
-//void Print_Button ();           // The Print_Button function prints on the CCS console the button pressed
-
-#endif
+void delay5ms();                // The function delay5ms delays the for 5ms
+//#endif
