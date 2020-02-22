@@ -58,11 +58,8 @@ uint8_t Pressed_Row () {
     Systick_Delay(10);          // Generates a 10ms delay
 
     row |= (ROW0_PORT->IN & ROW0_PIN) ? 1 << 0 : 0;       // This ternary condition assigns a 1 to the least significant bit if Row 0 is pressed else it assigns it a 0 (0000 000X)
-    Systick_Delay(10);          // Generates a 10ms delay
     row |= (ROW1_PORT->IN & ROW1_PIN) ? 1 << 1 : 0;       // This ternary condition assigns a 1 to the first bit if Row 1 is pressed else it assigns it a 0 (0000 00X0)
-    Systick_Delay(10);          // Generates a 10ms delay
     row |= (ROW2_PORT->IN & ROW2_PIN) ? 1 << 2 : 0;       // This ternary condition assigns a 1 to the second bit if Row 2 is pressed else it assigns it a 0 (0000 0X00)
-    Systick_Delay(10);          // Generates a 10ms delay
     row |= (ROW3_PORT->IN & ROW3_PIN) ? 1 << 3 : 0;       // This ternary condition assigns a 1 to the third bit if Row 3 is pressed else it assigns it a 0 (0000 X000)
 
     return row;
