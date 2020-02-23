@@ -11,15 +11,12 @@ void main(void)
 
 	Init_Keypad();              // Calls the Keypad Initialization Function
     uint16_t button = 0x0000;
-
     while(1) {
         button = Button_Pressed(button);    // The 'button' variable is assigned the 16-bit number returned by Button_Pressed()
 
-        Systick_Delay(10); // Creates a 10 ms delay
-
+        Systick_Delay(100); // Creates a 10 ms delay
             if (!button) {
             }
-            // Do nothing
             else {
                 Print_Button(button);        // Calls the State Machine Function
             }

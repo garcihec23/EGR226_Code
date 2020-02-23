@@ -62,6 +62,15 @@ uint8_t Pressed_Row () {
     row |= (ROW2_PORT->IN & ROW2_PIN) ? 1 << 2 : 0;       // This ternary condition assigns a 1 to the second bit if Row 2 is pressed else it assigns it a 0 (0000 0X00)
     row |= (ROW3_PORT->IN & ROW3_PIN) ? 1 << 3 : 0;       // This ternary condition assigns a 1 to the third bit if Row 3 is pressed else it assigns it a 0 (0000 X000)
 
+    /*
+     * If the user is holding down the button, we won't receive
+     * multiple presses
+     */
+    while(!(ROW0_PORT->IN & ROW0_PIN) == 0);
+    while(!(ROW1_PORT->IN & ROW1_PIN) == 0);
+    while(!(ROW2_PORT->IN & ROW2_PIN) == 0);
+    while(!(ROW3_PORT->IN & ROW3_PIN) == 0);
+
     return row;
 }
 
