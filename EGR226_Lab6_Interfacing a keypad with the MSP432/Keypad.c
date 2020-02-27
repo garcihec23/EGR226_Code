@@ -131,5 +131,4 @@ void Systick_Delay(uint16_t time) {
     }
 
     SysTick -> CTRL = 0;        // Stop the Timer (Enable = 0)
-
 }
