@@ -5,7 +5,7 @@
 
 /*
  * The init_LCD_pins() function initializes the the pins for the LCD as outputs
- * NOTE: The RW pin is not initialized b/c it is never pulsed high, it remains low
+ * NOTE: The RW pin is not initialized b/c it is never pulsed high (we don't read instructions in), it remains low
  * always in the case of the LCD, therefore it is connected to ground physically on the MSP432 Launch Pad
  */
 void init_LCD_pins() {
@@ -28,11 +28,13 @@ void init_LCD_pins() {
 }
 
 /*
- * The init_LCD() function
+ * The init_LCD() function goes through the initialization sequence
+ * that is required by the LCD to function properly
  */
 void init_LCD () {
 
         milli_delay(100);
+
 // Reset
         command_write(0x30);
         milli_delay(5);
@@ -46,18 +48,18 @@ void init_LCD () {
         command_write(0x20);
         micro_delay(110);
 
-// -----------------------------
+// -------------- Initialization Sequence ---------------
 
-        command_write(0x28); // function set
+        command_write(0x28); // Function set
         micro_delay(60);
 
-        command_write(0x0F); // Display On
+        command_write(0x0C); // Display On (default should be 0x0F, cursor on and  blinking)
         micro_delay(60);
 
-        command_write(0x01); // clear
+        command_write(0x01); // Clear
         milli_delay(10);
 
-        command_write(0x06); // entry mode
+        command_write(0x06); // Entry mode
         micro_delay(60);
 
 }
@@ -65,7 +67,7 @@ void init_LCD () {
 /*
  * The push_nibble() function takes in an 8-bit number, nibble which gets masked, then shifted 4-bits to the left.
  * This is done because we are only using the MSBs of any port (to reduce the number of pins physically used). Then
- * the pulse_enable() function is called
+ * the pulse_enable() function is called which pulses enable HIGH to LOW
  */
 
 void push_nibble(uint8_t nibble) {
@@ -111,6 +113,8 @@ void data_write(uint8_t data) {
 /*
  * The pulse_enable() function pulses the enable from high to low
  * which causes instructions/commands to move and be executed
+ * NOTE: a delay is required to make sure Enable does in fact goes
+ * HIGH
  */
 void pulse_enable() {
 
@@ -144,16 +148,9 @@ void micro_delay(unsigned us) {
 
     SysTick -> LOAD = (3 * us) - 1;
     SysTick -> VAL = 0;
-    //SysTick -> CTRL = 5;                        // Enable the SysTick Timer
 
     while ((SysTick -> CTRL & BIT(16)) == 0);
-//    {
-//        /*
-//         * Wait until the COUNTFLAG is set
-//         */
-//    }
 
-    //SysTick -> CTRL = 0;        // Stop the Timer (Enable = 0)
 }
 
 /*
@@ -164,14 +161,7 @@ void milli_delay(unsigned ms) {
 
     SysTick -> LOAD = (3000 * ms) - 1;
     SysTick -> VAL = 0;
-    //SysTick -> CTRL = 5;                        // Enable the SysTick Timer
 
     while ((SysTick -> CTRL & BIT(16)) == 0);
-//    {
-//        /*
-//         * Wait until the COUNTFLAG is set
-//         */
-//    }
 
-    //SysTick -> CTRL = 0;        // Stop the Timer (Enable = 0)
 }

@@ -27,41 +27,55 @@ void main(void)
     command_write(0x02);    // Return Home
     micro_delay(500);       // Delay 500 us
 
-    command_write(0x84);    // address 04 1st line
+    command_write(0x85);    // address 05 1st line
     micro_delay(500);       // Delay 500 us
 
-	int i = 0;      // local variable
+	int i = 0;              // Local Variable
 
+	/*
+	 * Prints my name!
+	 */
 	for(i = 0; i < 6; i++) {
-	    data_write(myName[i]);      //
+	    data_write(myName[i]);
+
 	    milli_delay(100);
 	}
 
-	command_write(0xC4);// address 45 2nd line
+	command_write(0xC4);    // Address 45 2nd line
 	micro_delay(500);
 
-    for(i=0;i<7;i++) {
-        data_write(p_name[i]);
-        milli_delay(100);
+//    /*
+//     * Prints partner's name
+//     */
+//    for(i = 0;i < 7; i++) {
+//        data_write(p_name[i]);
+//        milli_delay(100);
+//    }
+//
+//    command_write(0x96);    // Address 16 3rd line
+//    micro_delay(500);
+//
+//    /*
+//     * Prints course name
+//     */
+//    for(i = 0; i < 3; i++)
+//    {
+//        data_write(course[i]);
+//        milli_delay(100);
+//    }
+//
+//    command_write(0xD6);// address 56 4th line
+//    micro_delay(500);
+//
+//    /*
+//     * Prints course number
+//     */
+//    for(i = 0; i < 3; i++)
+//    {
+//        data_write(num[i]);
+//        milli_delay(100);
     }
 
-    command_write(0x96);// address 16 3rd line
-    micro_delay(500);
-
-    for(i = 0; i < 3; i++)
-    {
-        data_write(course[i]);
-        milli_delay(100);
-    }
-    command_write(0xD6);// address 56 4th line
-    micro_delay(500);
-
-    for(i = 0; i < 3; i++)
-    {
-        data_write(num[i]);
-        milli_delay(100);
-    }
-
-	while (1);  // Keeps main alive
+	while (1);  // Keeps main() alive
 
 }

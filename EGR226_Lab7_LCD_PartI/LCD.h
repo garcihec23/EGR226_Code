@@ -28,16 +28,16 @@
  * Function Prototypes
  */
 
-void init_LCD_pins(); // DONE
-void init_LCD();      // DONE
-void pulse_enable();  // DONE
-void push_nibble(uint8_t nibble); // DONE
-void push_byte(uint8_t byte);     // DONE
-void command_write(uint8_t data); // DONE
-void data_write(uint8_t data);    // DONE
+void init_LCD_pins();
+void init_LCD();
+void pulse_enable();
+void push_nibble(uint8_t nibble);
+void push_byte(uint8_t byte);
+void command_write(uint8_t data);
+void data_write(uint8_t data);
 
-void init_systick_delay(void); // DONE
-void micro_delay(unsigned us); // DONE
-void milli_delay(unsigned ms); // DONE
+void init_systick_delay(void);
+void micro_delay(unsigned us);
+void milli_delay(unsigned ms);
 
 #endif
