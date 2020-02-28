@@ -37,7 +37,7 @@ void init_LCD () {
 
 // Reset
         command_write(0x30);
-        milli_delay(5);
+        milli_delay(110);
 
         command_write(0x30);
         micro_delay(110);
@@ -69,7 +69,6 @@ void init_LCD () {
  * This is done because we are only using the MSBs of any port (to reduce the number of pins physically used). Then
  * the pulse_enable() function is called which pulses enable HIGH to LOW
  */
-
 void push_nibble(uint8_t nibble) {
     DATA_PORT -> OUT &= ~0xF0;                  // This clears the MSBs of DATA_PORT to make sure nothing extra is being shifted in causing errors
     DATA_PORT -> OUT |= (nibble & 0x0F) << 4;   // Nibble is masked with 0x0F, then shift 4-bits and assigned to DATA_PORT
@@ -137,7 +136,7 @@ void init_systick_delay(void) {
     SysTick -> CTRL = 0;
     SysTick -> LOAD = 0x00FFFFFF;
     SysTick -> VAL = 0;                          // Clear Current Value Register
-    SysTick -> CTRL = 0x00000005;                         // Enable the SysTick Timer
+    SysTick -> CTRL = 0x00000005;                // Enable the SysTick Timer
 }
 
 /*

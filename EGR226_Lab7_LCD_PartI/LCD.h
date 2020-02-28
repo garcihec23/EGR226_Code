@@ -1,8 +1,6 @@
 #ifndef __LCD_H__    // ifndef stands for if not defined
 #define __LCD_H__
 
-//#include <stdint.h>
-
 /*
  * If we want to implement our LCD in a different project
  * and can't use the same pins, we only need to change these define
